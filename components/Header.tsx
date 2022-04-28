@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header>
       <Link href="/" passHref>
-        <h1>
+        <h1 className="text-3xl font-bold underline">
           <Image src="/tomato.png" height="38" width="38" alt="logo" /> Recipe
           Search
         </h1>
