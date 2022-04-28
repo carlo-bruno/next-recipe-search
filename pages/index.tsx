@@ -8,10 +8,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <Head>
         <title>Recipe Search | Home</title>
-        <meta name="description" content="Over engineered recipe search app" />
-        <link rel="icon" href="/tomato.png" />
       </Head>
-
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>

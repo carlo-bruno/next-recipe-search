@@ -1,4 +1,7 @@
+import Head from "next/head";
 import { ReactNode } from "react";
+import Footer from "./Footer";
+import Header from "./Header";
 
 type Props = {
   children?: ReactNode;
@@ -7,18 +10,16 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <>
-      <header>
-        <p>Header</p>
-      </header>
-      <nav>
-        <p>Nav</p>
-      </nav>
+      <Head>
+        <title>Recipe Search</title>
+        <meta name="description" content="Over engineered recipe search app" />
+        <link rel="icon" href="/tomato.png" />
+      </Head>
+      <Header />
 
       <main>{children}</main>
 
-      <footer>
-        <p>Footer</p>
-      </footer>
+      <Footer />
     </>
   );
 };
