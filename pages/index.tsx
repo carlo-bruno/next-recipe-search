@@ -7,9 +7,9 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Recipe Search</title>
+        <title>Recipe Search | Home</title>
         <meta name="description" content="Over engineered recipe search app" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/tomato.png" />
       </Head>
 
       <main className={styles.main}>
