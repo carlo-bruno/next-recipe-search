@@ -9,7 +9,6 @@ const Header = () => {
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
-    console.log("isOpen", isOpen);
   };
 
   return (
