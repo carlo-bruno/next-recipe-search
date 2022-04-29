@@ -18,7 +18,7 @@ const Layout = ({ children }: Props) => {
       </Head>
       <Header />
 
-      <main className="bg-slate-300 h-300 flex-auto">{children}</main>
+      <main className="h-full flex-auto">{children}</main>
 
       <Footer />
     </Container>
@@ -28,8 +28,7 @@ const Layout = ({ children }: Props) => {
 export default Layout;
 
 const Container = tw.div`
-  container
-  mx-auto
+  bg-slate-400
   
   min-h-screen
   flex

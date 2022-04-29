@@ -15,7 +15,13 @@ const Header = () => {
     <HeaderStyles>
       <Link href="/" passHref>
         <Logo>
-          <Image src="/tomato.png" height="48" width="48" alt="logo" />
+          <Image
+            src="/tomato.png"
+            height="48"
+            width="48"
+            alt="logo"
+            layout="fixed"
+          />
           <Title>Recipe Search</Title>
         </Logo>
       </Link>
@@ -43,7 +49,8 @@ const Header = () => {
 export default Header;
 
 const HeaderStyles = tw.div`
-  bg-orange-200
+  container
+  mx-auto
   px-5
   py-2
   
@@ -60,6 +67,7 @@ const Logo = tw.div`
   justify-center
   items-center
   h-18
+  min-w-max
   mr-4
 `;
 
