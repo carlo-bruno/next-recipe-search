@@ -2,21 +2,14 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import tw from "tailwind-styled-components/dist/tailwind";
+import Accordion from "../components/Accordion";
 import { Category } from "../types/types";
 import { categoryData } from "../utils/categoryData";
 
 const Home: NextPage = () => {
-  const categoriesEl = categoryData.map(
-    ({ id, name, description, thumbnail }: Category) => {
-      return (
-        <section key={id}>
-          <h3>{name}</h3>
-          <p>{description}</p>
-          <Image src={thumbnail} alt={name} width="320" height="200" />
-        </section>
-      );
-    }
-  );
+  const categoriesEl = categoryData.map((category: Category) => {
+    return <Accordion key={category.id} category={category} />;
+  });
 
   return (
     <ContainerStyle>
