@@ -2,7 +2,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import tw from "tailwind-styled-components/dist/tailwind";
 
-const Nav = ({ isOpen }: { isOpen: boolean }) => {
+type NavProps = {
+  isOpen: boolean;
+};
+
+const Nav = ({ isOpen }: NavProps) => {
   const router = useRouter();
 
   return (
@@ -31,12 +35,12 @@ const Nav = ({ isOpen }: { isOpen: boolean }) => {
 
 export default Nav;
 
-interface NavProps {
+interface NavStylesProps {
   $isOpen: boolean;
 }
 
 const NavStyles = tw.nav`
-  ${(p: NavProps) => (p.$isOpen ? "" : "hidden")}
+  ${(p: NavStylesProps) => (p.$isOpen ? "" : "hidden")}
 
   bg-green-200
   w-full

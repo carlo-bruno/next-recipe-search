@@ -4,11 +4,11 @@ import Footer from "./Footer";
 import Header from "./Header";
 import tw from "tailwind-styled-components";
 
-type Props = {
+type LayoutProps = {
   children?: ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <Container>
       <Head>

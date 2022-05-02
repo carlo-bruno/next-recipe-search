@@ -1,6 +1,7 @@
 import Head from "next/head";
+import { NextPage } from "next/types";
 
-const SearchPage = () => {
+const SearchPage: NextPage = () => {
   return (
     <div>
       <Head>

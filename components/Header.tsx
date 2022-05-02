@@ -7,7 +7,7 @@ import { useState } from "react";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = () => {
+  const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
@@ -25,7 +25,7 @@ const Header = () => {
           <Title>Recipe Search</Title>
         </Logo>
       </Link>
-      <HamburgerMenu onClick={handleClick}>
+      <HamburgerMenu onClick={toggleMenu}>
         <svg
           className="w-7 h-7"
           fill="none"
