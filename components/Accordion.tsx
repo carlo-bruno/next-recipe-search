@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react";
 import tw from "tailwind-styled-components/dist/tailwind";
 import { Category } from "../types/types";
 
@@ -7,10 +8,17 @@ type AccordionProps = {
 };
 
 const Accordion = ({ category }: AccordionProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleAccordion = () => {
+    setIsOpen((prev) => !prev);
+    console.log("accordion", isOpen);
+  };
+
   return (
     <AccordionStyles>
       <TextContent>
-        <h3>{category.name}</h3>
+        <h3 className="text-xl font-semibold">{category.name}</h3>
         <p className="px-3">{category.description}</p>
       </TextContent>
       <ImageAndButton>
@@ -20,10 +28,12 @@ const Accordion = ({ category }: AccordionProps) => {
           width="320"
           height="200"
         />
-        {/* Use chevron icons */}
-        <ToggleButton>Open &#x25BC; | Close &#x25B2;</ToggleButton>
+        <ToggleButton onClick={toggleAccordion}>
+          {isOpen ? `Close \u25B2` : `Open \u25BC`}
+        </ToggleButton>
       </ImageAndButton>
-      <SlideContainer></SlideContainer>
+      {/* Create component  */}
+      <SlideContainer $isOpen={isOpen} />
     </AccordionStyles>
   );
 };
@@ -74,11 +84,16 @@ const ToggleButton = tw.button`
   font-bold
 `;
 
+interface SlideContainerProps {
+  $isOpen: boolean;
+}
+
 const SlideContainer = tw.div`
-  hidden
+  ${(p: SlideContainerProps) => (p.$isOpen ? "" : "hidden")}
   
   w-full
   h-32
   border-2
   border-black
+  mt-4
 `;
