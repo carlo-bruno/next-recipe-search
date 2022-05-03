@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import tw from "tailwind-styled-components/dist/tailwind";
 import { Category } from "../types/types";
+import AccordionPaginatedBox from "./AccordionPaginatedBox";
 
 type AccordionProps = {
   category: Category;
@@ -32,8 +33,7 @@ const Accordion = ({ category }: AccordionProps) => {
           {isOpen ? `Close \u25B2` : `Open \u25BC`}
         </ToggleButton>
       </ImageAndButton>
-      {/* Create component  */}
-      <SlideContainer $isOpen={isOpen} />
+      {isOpen && <AccordionPaginatedBox />}
     </AccordionStyles>
   );
 };
@@ -41,18 +41,16 @@ const Accordion = ({ category }: AccordionProps) => {
 export default Accordion;
 
 const AccordionStyles = tw.section`
-  w-11/12
+  w-full
   mx-auto
   my-6
   min-h-72
-  px-6
-  py-4
+  px-5
+  py-3
   flex
   flex-row
-  justify-between
   place-content-between
   flex-wrap
-
   border-2
   `;
 
@@ -60,6 +58,7 @@ const TextContent = tw.div`
   h-48
   w-1/2
   overflow-hidden
+
   md:w-2/3
 `;
 
@@ -69,31 +68,15 @@ const ImageAndButton = tw.div`
   align-middle
   justify-between
   w-1/2
+  
   md:w-1/3
-
 `;
 
 // create a consistend button style
 const ToggleButton = tw.button`
-  border
-  border-orange-600
   bg-orange-400
   rounded-lg
   py-2
-  text-white
   font-bold
-`;
-
-interface SlideContainerProps {
-  $isOpen: boolean;
-}
-
-const SlideContainer = tw.div`
-  ${(p: SlideContainerProps) => (p.$isOpen ? "" : "hidden")}
-  
-  w-full
-  h-32
-  border-2
-  border-black
-  mt-4
+  text-neutral-800
 `;
