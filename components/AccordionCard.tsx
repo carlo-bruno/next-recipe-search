@@ -16,16 +16,14 @@ const AccordionCard = ({}: AccordionCardProps): JSX.Element => {
           layout="intrinsic"
           width="256"
           height="256"
-          className="overflow-hidden object-cover object-center rounded-t-lg"
+          className="object-cover object-center"
         />
       </ContentDiv>
       <div className="flex justify-between">
-        <button className="w-1/2 bg-neutral-200 rounded-bl-lg py-1.5 font-bold text-neutral-800">
-          Quick View
-        </button>
-        <button className="w-1/2 bg-orange-400 rounded-br-lg py-1.5 font-bold text-neutral-800">
+        <AccordionCardButtons $primary={false}>Quick View</AccordionCardButtons>
+        <AccordionCardButtons $primary={true}>
           Show Recipe &#8594;
-        </button>
+        </AccordionCardButtons>
       </div>
     </AccordionCardStyles>
   );
@@ -35,7 +33,9 @@ export default AccordionCard;
 
 const AccordionCardStyles = tw.div`
   rounded-lg
+  overflow-hidden
   w-[calc(50%-0.5rem)]
+  min-w-[240px]
   h-44
   m-1
   flex
@@ -43,19 +43,18 @@ const AccordionCardStyles = tw.div`
 
   lg:h-56
   lg:w-[calc(50%-1rem)]
+  lg:max-w-md
   lg:m-2
 
   xl:h-64
-  xl:mx-2
+  xl:mx-4
 `;
 
 const ContentDiv = tw.div`
   flex
   flex-col
   h-full
-
   overflow-hidden
-
   relative
 `;
 
@@ -69,7 +68,6 @@ const RecipeTitle = tw.p`
   content-end
 
   z-10
-  text-lg
   text-white
   font-bold
   h-full
@@ -81,6 +79,23 @@ const RecipeTitle = tw.p`
   from-neutral-900/[.9]
   via-neutral-900/[.5]
 
-  lg:via-neutral-900/[.3]
+  md:text-lg
   lg:text-xl
+  lg:via-neutral-900/[.3]
+`;
+
+interface ButtonProps {
+  $primary: boolean;
+}
+
+const AccordionCardButtons = tw.button`
+  ${(p: ButtonProps) => (p.$primary ? "bg-orange-400" : "bg-neutral-200")}
+
+  w-1/2
+  py-1.5
+  text-sm
+  font-bold
+  text-neutral-800
+
+  lg:text-base
 `;

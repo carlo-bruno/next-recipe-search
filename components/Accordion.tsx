@@ -52,7 +52,7 @@ const AccordionStyles = tw.section`
   place-content-between
   flex-wrap
   border-2
-  `;
+`;
 
 const TextContent = tw.div`
   h-48
