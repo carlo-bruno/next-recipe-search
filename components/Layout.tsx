@@ -18,7 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
       </Head>
       <Header />
 
-      <main className="h-full flex-auto">{children}</main>
+      <ContentMain>{children}</ContentMain>
 
       <Footer />
     </Container>
@@ -33,4 +33,15 @@ const Container = tw.div`
   min-h-screen
   flex
   flex-col
+`;
+
+const ContentMain = tw.main`
+  border-y-2
+  container
+  mx-auto
+  px-5
+  py-2
+
+  h-full
+  flex-auto
 `;

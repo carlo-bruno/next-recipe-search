@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   });
 
   return (
-    <ContainerStyle>
+    <>
       <Head>
         <title>Recipe Search | Home</title>
       </Head>
@@ -38,16 +38,8 @@ const Home: NextPage = () => {
 
       {/* Display Accordion for each Category */}
       {categoriesEl}
-    </ContainerStyle>
+    </>
   );
 };
 
 export default Home;
-
-const ContainerStyle = tw.div`
-  border-y-2
-  container
-  mx-auto
-  px-5
-  py-2
-`;

@@ -70,6 +70,7 @@ const ImageAndButton = tw.div`
   w-1/2
   
   md:w-1/3
+  xl:w-[320px]
 `;
 
 // create a consistend button style
