@@ -39,9 +39,11 @@ const ContentMain = tw.main`
   border-y-2
   container
   mx-auto
-  px-5
-  py-2
+  
 
   h-full
   flex-auto
+
+  md:px-5
+  md:py-2
 `;

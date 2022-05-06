@@ -72,13 +72,15 @@ const Logo = tw.div`
 `;
 
 const Title = tw.h1`
-  text-2xl
+  text-xl
   text-purple-800
   font-bold
   ml-2
 
   hover:text-orange-600
   hover:underline
+
+  md:text-2xl
 `;
 
 const HamburgerMenu = tw.button`
