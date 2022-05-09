@@ -1,10 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import tw from "tailwind-styled-components/dist/tailwind";
 import Accordion from "../components/Accordion";
-import { Category } from "../types/types";
 import { categoryData } from "../utils/categoryData";
+import type { Category } from "../types";
 
 const Home: NextPage = () => {
   const categoriesEl = categoryData.map((category: Category) => {

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import tw from "tailwind-styled-components/dist/tailwind";
-import { Category } from "../types/types";
 import AccordionPaginatedBox from "./AccordionPaginatedBox";
+import type { Category } from "../types";
 
 type AccordionProps = {
   category: Category;
