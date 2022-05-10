@@ -22,7 +22,7 @@ const AccordionCard = ({}: AccordionCardProps): JSX.Element => {
       <div className="flex justify-between">
         <AccordionCardButtons $primary={false}>Quick View</AccordionCardButtons>
         <AccordionCardButtons $primary={true}>
-          Show Recipe &#8594;
+          See Recipe &#8594;
         </AccordionCardButtons>
       </div>
     </AccordionCardStyles>
@@ -42,12 +42,14 @@ const AccordionCardStyles = tw.div`
   flex-col
 
   lg:h-56
-  lg:w-[calc(50%-1rem)]
-  lg:max-w-md
-  lg:m-2
+  lg:w-[calc(25%-4px)]
+  lg:min-w-[220px]
+  lg:my-2
+  lg:mx-0.5
 
   xl:h-64
-  xl:mx-4
+  xl:w-[24%]
+  xl:mx-1
 `;
 
 const ContentDiv = tw.div`
@@ -80,8 +82,8 @@ const RecipeTitle = tw.p`
   via-neutral-900/[.5]
 
   md:text-lg
-  lg:text-xl
   lg:via-neutral-900/[.3]
+  xl:text-xl
 `;
 
 interface ButtonProps {
@@ -96,6 +98,4 @@ const AccordionCardButtons = tw.button`
   text-sm
   font-bold
   text-neutral-800
-
-  lg:text-base
 `;
