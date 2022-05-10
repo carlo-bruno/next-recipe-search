@@ -6,7 +6,7 @@ export const HeaderStyles = tw.header`
   bg-white
   bg-opacity-40
   text-sm
-  mb-8
+  mb-6
 
   flex
   flex-col
@@ -34,13 +34,14 @@ export const TitleBox = tw.div`
   font-bold
 
 
-  md:justify-start
+  md:justify-center
   md:w-full
   md:h-full
   md:border-0
   md:p-0
   md:items-end
   md:text-3xl
+  xl:mb-8
   xl:text-4xl
 `;
 
@@ -55,7 +56,7 @@ export const InfoBox = tw.div`
   pb-8
 
   md:justify-start
-  md:items-start
+  md:items-center
   md:h-full
   md:w-full
   md:pt-0
@@ -68,7 +69,7 @@ export const LinksDiv = tw.div`
   mt-2
 
   md:w-full
-  md:justify-start
+  md:justify-center
   md:mt-2
 
 `;
@@ -84,7 +85,7 @@ export const StyledLink = tw.a`
   border-b-[3px]
   border-current
 
-  md:ml-4
+  md:mx-auto
   md:mt-1
   lg:text-base
 
@@ -97,6 +98,7 @@ export const ImageBox = tw.div`
   flex
   justify-center
   items-center
+  mb-4
 
   md:row-span-2
   md:h-max
@@ -111,7 +113,7 @@ export const SectionStyles = tw.section`
   bg-white
   bg-opacity-40
   text-sm
-  mb-8
+  mb-6
 
   md:p-4
   xl:w-11/12
@@ -120,7 +122,7 @@ export const SectionStyles = tw.section`
 export const SectionTitle = tw.h3`
   text-xl
   font-bold
-  mb-3
+  my-3
 `;
 
 //  Ingredients Section
