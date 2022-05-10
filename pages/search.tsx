@@ -3,6 +3,7 @@ import Head from "next/head";
 import type { NextPage } from "next/types";
 import type { SyntheticEvent, FormEvent } from "react";
 import tw from "tailwind-styled-components";
+import SearchResultCard from "../components/SearchResultCard";
 
 const SearchPage: NextPage = () => {
   const [queryString, setQueryString] = useState("");
@@ -40,8 +41,20 @@ const SearchPage: NextPage = () => {
         />
       </SearchBarStyles>
 
-      {/* Search Results */}
-      {/* Display search cards */}
+      <p className="text-center my-2">
+        {queryString
+          ? `Search results for ${queryString}`
+          : `What recipe would you like to try today?`}
+      </p>
+
+      <SearchResultGroup>
+        <SearchResultCard />
+        <SearchResultCard />
+        <SearchResultCard />
+        <SearchResultCard />
+        <SearchResultCard />
+        <SearchResultCard />
+      </SearchResultGroup>
     </>
   );
 };
@@ -59,7 +72,6 @@ const SearchBarStyles = tw.form`
   py-2
   px-4
   mt-4
-
   flex
   flex-row
 
@@ -80,4 +92,12 @@ const SearchInputStyles = tw.input`
 
   focus:outline-none
   focus:shadow-outline
+`;
+
+const SearchResultGroup = tw.div`
+  px-2
+
+  md:flex
+  md:flex-wrap
+  md:justify-center
 `;
