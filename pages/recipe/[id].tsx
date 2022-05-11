@@ -1,5 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
+import type { GetServerSideProps } from "next/types";
+import type { RecipeTransformedData } from "../../types";
+import { transformRawRecipe } from "../../utils";
 import {
   HeaderStyles,
   ImageBox,
@@ -12,7 +15,11 @@ import {
   TitleBox,
 } from "./recipe.styles";
 
-const SingleRecipePage = () => {
+type RecipePageProps = {
+  recipe: RecipeTransformedData;
+};
+
+const SingleRecipePage = ({ recipe }: RecipePageProps) => {
   return (
     <>
       <Head>
@@ -22,24 +29,33 @@ const SingleRecipePage = () => {
       {/* Header content */}
       <HeaderStyles>
         <TitleBox>
-          <h2>{"Beef Dumpling Stew"}</h2>
+          <h2>{recipe.title}</h2>
         </TitleBox>
         <InfoBox>
           <div>
-            <span>{"Category"}</span> | <span>{"Area of Origin [flag]"}</span>
+            <span>{recipe.category}</span> |{" "}
+            <span>
+              {recipe.area} {"[flag]"}
+            </span>
           </div>
           <LinksDiv>
-            <StyledLink href="https://www.google.com">
+            <StyledLink
+              href={recipe.source}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {`Original Source \u29C9`}
             </StyledLink>
-            <StyledLink href="https://www.youtube.com">{`Youtube Video \u29C9`}</StyledLink>
+            <StyledLink
+              href={recipe.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+            >{`Youtube Video \u29C9`}</StyledLink>
           </LinksDiv>
         </InfoBox>
         <ImageBox>
           <Image
-            src={
-              "https://www.themealdb.com/images/media/meals/uyqrrv1511553350.jpg"
-            }
+            src={recipe.thumbnail}
             width={500}
             height={500}
             alt={"Beef Dumpling Stew"}
@@ -52,8 +68,8 @@ const SingleRecipePage = () => {
       <SectionStyles>
         <SectionTitle>Ingredients</SectionTitle>
         <IngredientsList>
-          {[...Array(20)].map((el, i) => (
-            <li key={i}>{`ingredient ${i + 1}`}</li>
+          {recipe.ingredients.map((el, i) => (
+            <li key={i}>{el}</li>
           ))}
         </IngredientsList>
       </SectionStyles>
@@ -61,14 +77,36 @@ const SingleRecipePage = () => {
       {/* Instructions section */}
       <SectionStyles>
         <SectionTitle>Instructions</SectionTitle>
-        <ul>
-          {[...Array(10)].map((el, i) => (
-            <li key={i}>{`step ${i + 1}`}</li>
-          ))}
-        </ul>
+        <p className="max-w-4xl">{recipe.instruction}</p>
       </SectionStyles>
     </>
   );
 };
 
 export default SingleRecipePage;
+
+export const getServerSideProps: GetServerSideProps<RecipePageProps> = async ({
+  params,
+}) => {
+  const res = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params?.id}`
+  );
+  const json = await res.json();
+  const recipe: RecipeTransformedData = transformRawRecipe(json.meals[0]);
+
+  const data: RecipePageProps = {
+    recipe,
+  };
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      ...data,
+    },
+  };
+};

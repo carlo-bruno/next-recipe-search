@@ -128,10 +128,8 @@ export const SectionTitle = tw.h3`
 //  Ingredients Section
 export const IngredientsList = tw.ul`
   border-2
-  grid
-  grid-rows-[repeat(10,_1.5rem)]
-  grid-flow-col
-  grid-cols-2
   p-3
+  flex
+  flex-col
 `;
 
