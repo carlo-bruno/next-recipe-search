@@ -1,9 +1,7 @@
 import type { RecipeTransformedData } from "../types";
 
 export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
-
   const ingredients = _getIngredients(recipeRaw)
-  const tags = _getTags(recipeRaw.strTags)
 
   return {
     title: recipeRaw.strMeal,
@@ -15,7 +13,7 @@ export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
     instruction: recipeRaw.strInstructions,
     category: recipeRaw.strCategory,
     youtube: recipeRaw.strYoutube,
-    tags
+    tags: recipeRaw.strTags?.split(",") || []
   }
 }
 
@@ -26,8 +24,4 @@ function _getIngredients(recipeRaw: any) {
     result.push(`${recipeRaw[`strMeasure${i}`]} ${recipeRaw[`strIngredient${i}`]}`)
   }
   return result;
-}
-
-function _getTags(tags: string) {
-  return [...tags.split(",")]
 }

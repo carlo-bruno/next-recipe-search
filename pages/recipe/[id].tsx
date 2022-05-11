@@ -92,21 +92,18 @@ export const getServerSideProps: GetServerSideProps<RecipePageProps> = async ({
     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params?.id}`
   );
   const json = await res.json();
-  const recipe: RecipeTransformedData = transformRawRecipe(json.meals[0]);
 
-  const data: RecipePageProps = {
-    recipe,
-  };
-
-  if (!data) {
+  if (!json.meals) {
     return {
       notFound: true,
     };
   }
 
+  const recipe: RecipeTransformedData = transformRawRecipe(json.meals[0]);
+
   return {
     props: {
-      ...data,
+      recipe,
     },
   };
 };
