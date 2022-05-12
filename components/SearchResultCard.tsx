@@ -1,15 +1,19 @@
 import Image from "next/image";
+import Link from "next/link";
 import tw from "tailwind-styled-components";
+import type { RecipeTransformedData } from "../types";
 
-type SearchResultCardProps = {};
+type SearchResultCardProps = {
+  recipe: RecipeTransformedData;
+};
 
-const SearchResultCard = ({}: SearchResultCardProps): JSX.Element => {
+const SearchResultCard = ({ recipe }: SearchResultCardProps): JSX.Element => {
   return (
     <SearchResultCardStyles>
       <ImageDiv>
         <Image
-          src="https://www.themealdb.com/images/media/meals/uyqrrv1511553350.jpg"
-          alt="Beef Dumpling Stew"
+          src={recipe.thumbnail}
+          alt={recipe.title}
           layout="intrinsic"
           width="400"
           height="350"
@@ -18,16 +22,20 @@ const SearchResultCard = ({}: SearchResultCardProps): JSX.Element => {
       </ImageDiv>
 
       <ContentDiv>
-        <ResultTitle>Search Result Card</ResultTitle>
+        <ResultTitle>{recipe.title}</ResultTitle>
 
-        <p>Beef | Area of origin [flag]</p>
+        <p>
+          {recipe.category} | {recipe.area} [flag]
+        </p>
       </ContentDiv>
 
       <ButtonDiv>
         <SearchCardButtons>Quick View</SearchCardButtons>
-        <SearchCardButtons $primary={true}>
-          See Recipe &#8594;
-        </SearchCardButtons>
+        <Link href={`/recipe/${recipe.id}`} passHref>
+          <SearchCardButtons $primary={true}>
+            See Recipe &#8594;
+          </SearchCardButtons>
+        </Link>
       </ButtonDiv>
     </SearchResultCardStyles>
   );
@@ -79,8 +87,9 @@ const ContentDiv = tw.div`
   text-white
 
   bg-gradient-to-t
-  from-neutral-900/[.9]
-  via-neutral-900/[.5]
+  from-neutral-900/[.8]
+  via-neutral-900/[.1]
+  to-neutral-500/[.1]
 `;
 
 const ResultTitle = tw.p`

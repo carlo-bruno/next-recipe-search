@@ -1,13 +1,23 @@
-import { useState } from "react";
 import Head from "next/head";
 import type { NextPage } from "next/types";
-import type { SyntheticEvent, FormEvent } from "react";
+import type { FormEvent, SyntheticEvent } from "react";
+import { useState } from "react";
+import { useQuery } from "react-query";
 import tw from "tailwind-styled-components";
 import SearchResultCard from "../components/SearchResultCard";
+import useSearch from "../hooks/useSearch";
 
 const SearchPage: NextPage = () => {
   const [queryString, setQueryString] = useState("");
   const [input, setInput] = useState("");
+
+  const { data, isLoading, error } = useQuery(
+    ["search", queryString],
+    useSearch,
+    {
+      staleTime: 1000 * 60 * 60,
+    }
+  );
 
   const handleSubmit = (evt: SyntheticEvent) => {
     evt.preventDefault();
@@ -48,12 +58,16 @@ const SearchPage: NextPage = () => {
       </p>
 
       <SearchResultGroup>
-        <SearchResultCard />
-        <SearchResultCard />
-        <SearchResultCard />
-        <SearchResultCard />
-        <SearchResultCard />
-        <SearchResultCard />
+        {error ? (
+          <h2>Something went wrong</h2>
+        ) : isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          data &&
+          data.map((recipe) => (
+            <SearchResultCard key={recipe.id} recipe={recipe} />
+          ))
+        )}
       </SearchResultGroup>
     </>
   );
