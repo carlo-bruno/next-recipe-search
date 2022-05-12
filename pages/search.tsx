@@ -4,6 +4,7 @@ import type { FormEvent, SyntheticEvent } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import tw from "tailwind-styled-components";
+import LoadingSpinner from "../components/LoadingSpinner";
 import SearchResultCard from "../components/SearchResultCard";
 import useSearch from "../hooks/useSearch";
 
@@ -61,7 +62,7 @@ const SearchPage: NextPage = () => {
         {error ? (
           <h2>Something went wrong</h2>
         ) : isLoading ? (
-          <h2>Loading...</h2>
+          <LoadingSpinner />
         ) : (
           data &&
           data.map((recipe) => (

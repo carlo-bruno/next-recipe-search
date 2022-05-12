@@ -1,8 +1,8 @@
 import Head from "next/head";
 import type { ReactNode } from "react";
+import tw from "tailwind-styled-components";
 import Footer from "./Footer";
 import Header from "./Header";
-import tw from "tailwind-styled-components";
 
 type LayoutProps = {
   children?: ReactNode;
@@ -31,7 +31,6 @@ export default Layout;
 const Container = tw.div`
   bg-slate-400
   min-h-screen
-  min-w-max
   flex
   flex-col
 `;
