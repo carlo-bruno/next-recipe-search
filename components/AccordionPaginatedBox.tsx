@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import useFetchCategory from "../hooks/useFetchCategory";
 import AccordionCard from "./AccordionCard";
@@ -10,9 +11,30 @@ type AccordionPaginatedBoxProps = {
 const AccordionPaginatedBox = ({
   category,
 }: AccordionPaginatedBoxProps): JSX.Element => {
-  const { data, isLoading, error } = useFetchCategory(category);
+  const { data = [], isLoading, error } = useFetchCategory(category);
 
-  console.log("in Accordion", data);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const RECIPE_PER_PAGE = 4;
+
+  useEffect(() => {
+    setPageCount(Math.ceil(data.length / RECIPE_PER_PAGE));
+  }, [data]);
+
+  const pageUp = () => {
+    if (pageNumber + 1 <= pageCount) {
+      setPageNumber((prev) => prev + 1);
+      setOffset((prev) => prev + RECIPE_PER_PAGE);
+    }
+  };
+
+  const pageDown = () => {
+    if (pageNumber - 1 >= 1) {
+      setPageNumber((prev) => prev - 1);
+      setOffset((prev) => prev - RECIPE_PER_PAGE);
+    }
+  };
 
   return (
     <>
@@ -23,16 +45,21 @@ const AccordionPaginatedBox = ({
         ) : isLoading ? (
           <LoadingSpinner />
         ) : (
-          data &&
-          data.map((recipe) => (
-            <AccordionCard key={recipe.id} recipe={recipe} />
-          ))
+          data
+            .slice(offset, offset + RECIPE_PER_PAGE)
+            .map((recipe) => <AccordionCard key={recipe.id} recipe={recipe} />)
         )}
       </AccordionBoxStyles>
       <PaginationControls>
-        <button>prev</button>
-        <p>Page 1/1</p>
-        <button>next</button>
+        <PageButton onClick={pageDown} $isDisabled={pageNumber <= 1}>
+          &#8592; Previous
+        </PageButton>
+        <p>
+          Page {pageNumber}/{pageCount}
+        </p>
+        <PageButton onClick={pageUp} $isDisabled={pageNumber >= pageCount}>
+          Next &#8594;
+        </PageButton>
       </PaginationControls>
     </>
   );
@@ -54,12 +81,33 @@ const AccordionBoxStyles = tw.div`
 `;
 
 const PaginationControls = tw.div`
-  w-3/4
+  w-full
   flex
   flex-row
   justify-between
+  items-center
   mt-2
   mx-auto
+  rounded-xl
+  overflow-hidden
+  font-bold
 
+  md:w-3/4
   xl:w-7/12
+`;
+
+interface PageButtonProps {
+  $isDisabled?: boolean;
+}
+
+const PageButton = tw.button`
+  ${(p: PageButtonProps) =>
+    p.$isDisabled ? "cursor-not-allowed opacity-70 " : ""}
+  
+  bg-orange-400
+  w-1/3
+  max-w-[12rem]
+  py-1.5
+  font-bold
+  text-neutral-800
 `;
