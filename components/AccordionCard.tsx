@@ -1,18 +1,20 @@
 import Image from "next/image";
+import Link from "next/link";
 import tw from "tailwind-styled-components";
+import type { RecipeTransformedData } from "../types";
 
-type AccordionCardProps = {};
+type AccordionCardProps = {
+  recipe: RecipeTransformedData;
+};
 
-const AccordionCard = ({}: AccordionCardProps): JSX.Element => {
+const AccordionCard = ({ recipe }: AccordionCardProps): JSX.Element => {
   return (
     <AccordionCardStyles>
       <ContentDiv>
-        <RecipeTitle>
-          Accordion Card with cilantro and special sauce
-        </RecipeTitle>
+        <RecipeTitle>{recipe.title}</RecipeTitle>
         <Image
-          src="https://www.themealdb.com/images/media/meals/uyqrrv1511553350.jpg"
-          alt="Beef Dumpling Stew"
+          src={recipe.thumbnail}
+          alt={recipe.title}
           layout="intrinsic"
           width="256"
           height="256"
@@ -20,10 +22,12 @@ const AccordionCard = ({}: AccordionCardProps): JSX.Element => {
         />
       </ContentDiv>
       <div className="flex justify-between">
-        <AccordionCardButtons $primary={false}>Quick View</AccordionCardButtons>
-        <AccordionCardButtons $primary={true}>
-          See Recipe &#8594;
-        </AccordionCardButtons>
+        <AccordionCardButtons>Quick View</AccordionCardButtons>
+        <Link href={`/recipe/${recipe.id}`} passHref>
+          <AccordionCardButtons $primary={true}>
+            See Recipe &#8594;
+          </AccordionCardButtons>
+        </Link>
       </div>
     </AccordionCardStyles>
   );
@@ -78,16 +82,16 @@ const RecipeTitle = tw.p`
   px-3
 
   bg-gradient-to-t
-  from-neutral-900/[.9]
-  via-neutral-900/[.5]
+  from-neutral-900/[.8]
+  via-neutral-900/[.1]
+  to-neutral-500/[.1]
 
   md:text-lg
-  lg:via-neutral-900/[.3]
   xl:text-xl
 `;
 
 interface ButtonProps {
-  $primary: boolean;
+  $primary?: boolean;
 }
 
 const AccordionCardButtons = tw.button`

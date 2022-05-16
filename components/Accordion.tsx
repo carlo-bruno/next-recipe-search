@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import tw from "tailwind-styled-components/dist/tailwind";
-import AccordionPaginatedBox from "./AccordionPaginatedBox";
 import type { Category } from "../types";
+import AccordionPaginatedBox from "./AccordionPaginatedBox";
 
 type AccordionProps = {
   category: Category;
@@ -33,7 +33,7 @@ const Accordion = ({ category }: AccordionProps) => {
           {isOpen ? `Close \u25B2` : `Open \u25BC`}
         </ToggleButton>
       </ImageAndButton>
-      {isOpen && <AccordionPaginatedBox />}
+      {isOpen && <AccordionPaginatedBox category={category.name} />}
     </AccordionStyles>
   );
 };

@@ -1,21 +1,40 @@
 import tw from "tailwind-styled-components";
+import useFetchCategory from "../hooks/useFetchCategory";
 import AccordionCard from "./AccordionCard";
+import LoadingSpinner from "./LoadingSpinner";
 
-type AccordionPaginatedBoxProps = {};
+type AccordionPaginatedBoxProps = {
+  category: string;
+};
 
-const AccordionPaginatedBox = ({}: AccordionPaginatedBoxProps): JSX.Element => {
+const AccordionPaginatedBox = ({
+  category,
+}: AccordionPaginatedBoxProps): JSX.Element => {
+  const { data, isLoading, error } = useFetchCategory(category);
+
+  console.log("in Accordion", data);
+
   return (
-    <AccordionBoxStyles>
-      <AccordionCard />
-      <AccordionCard />
-      <AccordionCard />
-      <AccordionCard />
+    <>
+      <AccordionBoxStyles>
+        {/* <LoadingSpinner /> */}
+        {error ? (
+          <h2>Something went wrong</h2>
+        ) : isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          data &&
+          data.map((recipe) => (
+            <AccordionCard key={recipe.id} recipe={recipe} />
+          ))
+        )}
+      </AccordionBoxStyles>
       <PaginationControls>
         <button>prev</button>
         <p>Page 1/1</p>
         <button>next</button>
       </PaginationControls>
-    </AccordionBoxStyles>
+    </>
   );
 };
 
@@ -40,6 +59,7 @@ const PaginationControls = tw.div`
   flex-row
   justify-between
   mt-2
+  mx-auto
 
   xl:w-7/12
 `;
