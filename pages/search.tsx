@@ -23,7 +23,7 @@ const SearchPage: NextPage = () => {
   const handleSubmit = (evt: SyntheticEvent) => {
     evt.preventDefault();
     console.log("🚀  handleSubmit");
-    setQueryString(input);
+    setQueryString(input.trim());
   };
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ const SearchPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Recipe Search | Search</title>
+        <title>Recipe Search | Search {queryString}</title>
       </Head>
       {/* Search Bar */}
       <SearchBarStyles action="/" method="get" onSubmit={handleSubmit}>
@@ -52,11 +52,18 @@ const SearchPage: NextPage = () => {
         />
       </SearchBarStyles>
 
-      <p className="text-center my-2">
-        {queryString
-          ? `Search results for ${queryString}`
-          : `What recipe would you like to try today?`}
-      </p>
+      {queryString && data ? (
+        <p className="text-center my-2">
+          We found <span className="font-bold">{data.length}</span> results for{" "}
+          <span className="font-bold">{queryString}</span>
+        </p>
+      ) : isLoading ? (
+        <p className="text-center my-2">Loading...</p>
+      ) : (
+        <p className="text-center my-2">
+          What recipe would you like to try today?
+        </p>
+      )}
 
       <SearchResultGroup>
         {error ? (
