@@ -51,13 +51,23 @@ const AccordionPaginatedBox = ({
         )}
       </AccordionBoxStyles>
       <PaginationControls>
-        <PageButton onClick={pageDown} $isDisabled={pageNumber <= 1}>
+        <PageButton
+          onClick={pageDown}
+          $isDisabled={pageNumber <= 1 || isLoading}
+        >
           &#8592; Previous
         </PageButton>
-        <p>
-          Page {pageNumber}/{pageCount}
-        </p>
-        <PageButton onClick={pageUp} $isDisabled={pageNumber >= pageCount}>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <p>
+            Page {pageNumber}/{pageCount}
+          </p>
+        )}
+        <PageButton
+          onClick={pageUp}
+          $isDisabled={pageNumber >= pageCount || isLoading}
+        >
           Next &#8594;
         </PageButton>
       </PaginationControls>
@@ -81,7 +91,7 @@ const AccordionBoxStyles = tw.div`
 `;
 
 const PaginationControls = tw.div`
-  w-full
+  w-[calc(100%-0.5rem)]
   flex
   flex-row
   justify-between
@@ -90,10 +100,11 @@ const PaginationControls = tw.div`
   mx-auto
   rounded-xl
   overflow-hidden
+  text-sm
   font-bold
 
   md:w-3/4
-  xl:w-7/12
+  xl:w-8/12
 `;
 
 interface PageButtonProps {
@@ -107,7 +118,7 @@ const PageButton = tw.button`
   bg-orange-400
   w-1/3
   max-w-[12rem]
-  py-1.5
+  py-2
   font-bold
   text-neutral-800
 `;
