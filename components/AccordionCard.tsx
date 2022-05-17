@@ -21,14 +21,9 @@ const AccordionCard = ({ recipe }: AccordionCardProps): JSX.Element => {
           className="object-cover object-center"
         />
       </ContentDiv>
-      <div className="flex justify-between">
-        <AccordionCardButtons>Quick View</AccordionCardButtons>
-        <Link href={`/recipe/${recipe.id}`} passHref>
-          <AccordionCardButtons $primary={true}>
-            See Recipe &#8594;
-          </AccordionCardButtons>
-        </Link>
-      </div>
+      <Link href={`/recipe/${recipe.id}`} passHref>
+        <AccordionCardButton>See Recipe &#8594;</AccordionCardButton>
+      </Link>
     </AccordionCardStyles>
   );
 };
@@ -90,14 +85,9 @@ const RecipeTitle = tw.p`
   xl:text-xl
 `;
 
-interface ButtonProps {
-  $primary?: boolean;
-}
-
-const AccordionCardButtons = tw.button`
-  ${(p: ButtonProps) => (p.$primary ? "bg-orange-400" : "bg-neutral-200")}
-
-  w-1/2
+const AccordionCardButton = tw.button`
+  bg-orange-400
+  w-full
   py-1.5
   text-sm
   font-bold

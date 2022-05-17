@@ -1,6 +1,5 @@
 import { QueryFunctionContext, useQuery } from "react-query";
 import type { RecipeTransformedData } from "../types";
-import { transformRawRecipe } from "../utils";
 
 const useFetchCategory = (category: string) => {
   const fetchCategory = async (
@@ -15,9 +14,13 @@ const useFetchCategory = (category: string) => {
     const data = await res.json();
 
     if (data.meals) {
-      const transformedData = data.meals.map((item: any) =>
-        transformRawRecipe(item)
-      );
+      const transformedData = data.meals.map((item: any) => {
+        return {
+          title: item.strMeal,
+          thumbnail: item.strMealThumb,
+          id: item.idMeal,
+        };
+      });
       return transformedData;
     }
     return [];
