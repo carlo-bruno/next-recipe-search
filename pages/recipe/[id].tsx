@@ -35,7 +35,7 @@ const SingleRecipePage = ({ recipe }: RecipePageProps) => {
           <div>
             <span>{recipe.category}</span> |{" "}
             <span>
-              {recipe.area} {"[flag]"}
+              {recipe.area} [{recipe.countryCode}]
             </span>
           </div>
           <LinksDiv>

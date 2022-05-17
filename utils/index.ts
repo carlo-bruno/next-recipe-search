@@ -1,8 +1,10 @@
 import type { RecipeTransformedData } from "../types";
+import { countryCodeMap } from './coutryCode';
 
 export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
-  const ingredients = _getIngredients(recipeRaw)
-  const instructions = _getInstructions(recipeRaw.strInstructions)
+  const ingredients = _getIngredients(recipeRaw);
+  const instructions = _getInstructions(recipeRaw.strInstructions);
+  const countryCode = Object(countryCodeMap)[recipeRaw.strArea];
 
   return {
     title: recipeRaw.strMeal,
@@ -11,6 +13,7 @@ export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
     source: recipeRaw.strSource,
     id: recipeRaw.idMeal,
     area: recipeRaw.strArea,
+    countryCode,
     instructions,
     category: recipeRaw.strCategory,
     youtube: recipeRaw.strYoutube,

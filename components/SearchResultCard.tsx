@@ -25,7 +25,7 @@ const SearchResultCard = ({ recipe }: SearchResultCardProps): JSX.Element => {
         <ResultTitle>{recipe.title}</ResultTitle>
 
         <p>
-          {recipe.category} | {recipe.area} [flag]
+          {recipe.category} | {recipe.area} [{recipe.countryCode}]
         </p>
       </ContentDiv>
 
