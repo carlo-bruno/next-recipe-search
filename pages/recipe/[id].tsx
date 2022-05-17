@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import type { GetServerSideProps } from "next/types";
+import Flag from "react-world-flags";
 import type { RecipeTransformedData } from "../../types";
 import { transformRawRecipe } from "../../utils";
 import {
@@ -32,12 +33,10 @@ const SingleRecipePage = ({ recipe }: RecipePageProps) => {
           <h2>{recipe.title}</h2>
         </TitleBox>
         <InfoBox>
-          <div>
-            <span>{recipe.category}</span> |{" "}
-            <span>
-              {recipe.area} [{recipe.countryCode}]
-            </span>
-          </div>
+          <p>
+            {recipe.category} | {recipe.area}{" "}
+            <Flag code={recipe.countryCode} className="inline w-8 h-5 -mt-1" />
+          </p>
           <LinksDiv>
             <StyledLink
               href={recipe.source}

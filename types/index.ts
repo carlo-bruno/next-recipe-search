@@ -11,7 +11,7 @@ export interface RecipeTransformedData {
   ingredients: string[];
   thumbnail: string;
   area: string;
-  countryCode: number;
+  countryCode: string;
   category: string;
   tags: string[];
   instructions: string[];

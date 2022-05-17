@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Flag from "react-world-flags";
 import tw from "tailwind-styled-components";
 import type { RecipeTransformedData } from "../types";
 
@@ -25,7 +26,12 @@ const SearchResultCard = ({ recipe }: SearchResultCardProps): JSX.Element => {
         <ResultTitle>{recipe.title}</ResultTitle>
 
         <p>
-          {recipe.category} | {recipe.area} [{recipe.countryCode}]
+          {recipe.category} | {recipe.area}{" "}
+          <Flag
+            code={recipe.countryCode}
+            height="12"
+            className="inline w-8 h-5 -mt-1"
+          />
         </p>
       </ContentDiv>
 
