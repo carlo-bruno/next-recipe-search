@@ -13,7 +13,7 @@ export interface RecipeTransformedData {
   area: string;
   category: string;
   tags: string[];
-  instruction: string;
+  instructions: string[];
   source: string;
   youtube: string;
 }

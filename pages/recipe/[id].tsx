@@ -23,7 +23,7 @@ const SingleRecipePage = ({ recipe }: RecipePageProps) => {
   return (
     <>
       <Head>
-        <title>Recipe Search | Single Recipe</title>
+        <title>Recipe Search | {recipe.title}</title>
       </Head>
 
       {/* Header content */}
@@ -77,7 +77,13 @@ const SingleRecipePage = ({ recipe }: RecipePageProps) => {
       {/* Instructions section */}
       <SectionStyles>
         <SectionTitle>Instructions</SectionTitle>
-        <p className="max-w-4xl">{recipe.instruction}</p>
+        <ul className="max-w-4xl">
+          {recipe.instructions.map((el, i) => (
+            <li key={i} className="list-disc leading-9 ml-8">
+              {el}
+            </li>
+          ))}
+        </ul>
       </SectionStyles>
     </>
   );

@@ -112,7 +112,7 @@ export const SectionStyles = tw.section`
   overflow-hidden
   bg-white
   bg-opacity-40
-  text-sm
+  text-base
   mb-6
 
   md:p-4
@@ -131,5 +131,6 @@ export const IngredientsList = tw.ul`
   p-3
   flex
   flex-col
+  leading-7
 `;
 

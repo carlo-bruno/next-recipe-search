@@ -2,6 +2,7 @@ import type { RecipeTransformedData } from "../types";
 
 export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
   const ingredients = _getIngredients(recipeRaw)
+  const instructions = _getInstructions(recipeRaw.strInstructions)
 
   return {
     title: recipeRaw.strMeal,
@@ -10,7 +11,7 @@ export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
     source: recipeRaw.strSource,
     id: recipeRaw.idMeal,
     area: recipeRaw.strArea,
-    instruction: recipeRaw.strInstructions,
+    instructions,
     category: recipeRaw.strCategory,
     youtube: recipeRaw.strYoutube,
     tags: recipeRaw.strTags?.split(",") || []
@@ -18,10 +19,15 @@ export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
 }
 
 function _getIngredients(recipeRaw: any) {
-  const result = []
+  const result = [];
   for (let i = 1; i <= 20; i++) {
     if (!recipeRaw[`strIngredient${i}`] || !recipeRaw[`strMeasure${i}`]) break;
-    result.push(`${recipeRaw[`strMeasure${i}`]} ${recipeRaw[`strIngredient${i}`]}`)
+    result.push(`${recipeRaw[`strMeasure${i}`]} ${recipeRaw[`strIngredient${i}`]}`);
   }
   return result;
+}
+
+function _getInstructions(instrunctionRaw: any) {
+  if (!instrunctionRaw) return [];
+  return instrunctionRaw.replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|");
 }
