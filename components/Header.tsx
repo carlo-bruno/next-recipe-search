@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "./Nav";
-import tw from "tailwind-styled-components";
 import { useState } from "react";
+import tw from "tailwind-styled-components";
+import Nav from "./Nav";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -86,10 +86,10 @@ const Title = tw.h1`
 const HamburgerMenu = tw.button`
   inline-flex
   p-3
-  rounded
+  rounded-lg
   ml-auto
   outline-none
-  hover:bg-purple-200
+  hover:bg-orange-300
 
   lg:hidden
 `;

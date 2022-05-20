@@ -42,7 +42,6 @@ interface NavStylesProps {
 const NavStyles = tw.nav`
   ${(p: NavStylesProps) => (p.$isOpen ? "" : "hidden")}
 
-  bg-green-200
   w-full
   p-3
   justify-center
