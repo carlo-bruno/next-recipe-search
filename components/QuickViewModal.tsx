@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
+import { createPortal } from "react-dom";
 import Flag from "react-world-flags";
 import tw from "tailwind-styled-components";
 import { ModalContext } from "../context/modalContext";
@@ -9,7 +10,7 @@ const QuickViewModal = ({}) => {
   const { isModalOpen, modalContent, handleModal } = useContext(ModalContext);
 
   if (isModalOpen) {
-    return (
+    return createPortal(
       <ModalOverlay onClick={handleModal}>
         <ModalMain onClick={(evt: MouseEvent) => evt.stopPropagation()}>
           <ContentDiv>
@@ -49,7 +50,8 @@ const QuickViewModal = ({}) => {
 
           <CloseModalButton onClick={handleModal}>&#10005;</CloseModalButton>
         </ModalMain>
-      </ModalOverlay>
+      </ModalOverlay>,
+      document.getElementById("modal-root")!
     );
   } else {
     return null;
