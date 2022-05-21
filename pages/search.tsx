@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import tw from "tailwind-styled-components";
 import LoadingSpinner from "../components/LoadingSpinner";
 import SearchResultCard from "../components/SearchResultCard";
+import { ModalProvider } from "../context/modalContext";
 import useSearch from "../hooks/useSearch";
 
 const SearchPage: NextPage = () => {
@@ -31,7 +32,7 @@ const SearchPage: NextPage = () => {
   };
 
   return (
-    <>
+    <ModalProvider>
       <Head>
         <title>Recipe Search | Search {queryString}</title>
       </Head>
@@ -77,7 +78,7 @@ const SearchPage: NextPage = () => {
           ))
         )}
       </SearchResultGroup>
-    </>
+    </ModalProvider>
   );
 };
 

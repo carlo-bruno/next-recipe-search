@@ -1,48 +1,62 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useContext } from "react";
+import Flag from "react-world-flags";
 import tw from "tailwind-styled-components";
+import { ModalContext } from "../context/modalContext";
 
-type QuickViewModalProps = {};
+const QuickViewModal = ({}) => {
+  const { isModalOpen, modalContent, handleModal } = useContext(ModalContext);
 
-const QuickViewModal = ({}: QuickViewModalProps): JSX.Element => {
-  return (
-    <ModalOverlay>
-      <ModalMain>
-        <ContentDiv>
-          <ModalTitle>{"Quick View Modal"}</ModalTitle>
-          <p>
-            {"Category"} | {"Area"} {"[flag]"}
-          </p>
-          <IngredientShortList>
-            <li>ingredient 1</li>
-            <li>ingredient 2</li>
-            <li>ingredient 3</li>
-            <li>ingredient 4</li>
-            <li>ingredient 5</li>
-          </IngredientShortList>
-          <ModalMainButton>Show recipe &#8594;</ModalMainButton>
-        </ContentDiv>
-        <ImageDiv>
-          <Image
-            src={"https://www.themealdb.com/images/media/meals/1548772327.jpg"}
-            alt={"sample recipe"}
-            layout="intrinsic"
-            width="380"
-            height="380"
-            className="object-cover object-center h-full"
-          />
-        </ImageDiv>
+  if (isModalOpen) {
+    return (
+      <ModalOverlay onClick={handleModal}>
+        <ModalMain onClick={(evt: MouseEvent) => evt.stopPropagation()}>
+          <ContentDiv>
+            <ModalTitle>{modalContent.title}</ModalTitle>
+            <p>
+              {modalContent.category} | {modalContent.area}{" "}
+              <Flag
+                code={modalContent.countryCode}
+                height="12"
+                className="inline w-8 h-5 -mt-1"
+              />
+            </p>
+            <IngredientShortList>
+              {modalContent.ingredients
+                .slice(0, 5)
+                .map((item: string, i: number) => (
+                  <li key={i}>{item}</li>
+                ))}
+              <li className="text-sm italic text-center mt-auto">
+                more information in the next page
+              </li>
+            </IngredientShortList>
+            <Link href={`/recipe/${modalContent.id}`} passHref>
+              <ModalMainButton>Show recipe &#8594;</ModalMainButton>
+            </Link>
+          </ContentDiv>
+          <ImageDiv>
+            <Image
+              src={modalContent.thumbnail}
+              alt={modalContent.title}
+              layout="intrinsic"
+              width="380"
+              height="380"
+              className="object-cover object-center h-full"
+            />
+          </ImageDiv>
 
-        <CloseModalButton
-          onClick={() => {
-            console.log("close modal");
-          }}
-        >
-          &#10005;
-        </CloseModalButton>
-      </ModalMain>
-    </ModalOverlay>
-  );
+          <CloseModalButton onClick={handleModal}>&#10005;</CloseModalButton>
+        </ModalMain>
+      </ModalOverlay>
+    );
+  } else {
+    return null;
+  }
 };
+
+QuickViewModal.displayName = "QuickViewModal";
 
 export default QuickViewModal;
 
@@ -53,17 +67,18 @@ const ModalOverlay = tw.div`
   top-0
   left-0
   overflow-hidden
-  bg-black/[0.3]
+  bg-black/[0.5]
   flex
   flex-col
   items-center
+  z-40
 `;
 
 const ModalMain = tw.div`
   bg-orange-300
   relative
   h-[29rem]
-  z-20
+  z-50
   rounded-xl
   shadow-2xl
   overflow-hidden
@@ -118,12 +133,11 @@ const IngredientShortList = tw.ul`
   mx-3
   px-2
   text-black
-
   h-[60%]
   overflow-hidden
-  overflow-ellipsis
 
-  mix-blend-normal
+  flex
+  flex-col
 `;
 
 const ImageDiv = tw.div`

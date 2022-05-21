@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
 import Flag from "react-world-flags";
 import tw from "tailwind-styled-components";
+import { ModalContext } from "../context/modalContext";
 import type { RecipeTransformedData } from "../types";
 
 type SearchResultCardProps = {
@@ -9,6 +11,8 @@ type SearchResultCardProps = {
 };
 
 const SearchResultCard = ({ recipe }: SearchResultCardProps): JSX.Element => {
+  const { handleModal } = useContext(ModalContext);
+
   return (
     <SearchResultCardStyles>
       <ImageDiv>
@@ -36,7 +40,9 @@ const SearchResultCard = ({ recipe }: SearchResultCardProps): JSX.Element => {
       </ContentDiv>
 
       <ButtonDiv>
-        <SearchCardButtons>Quick View</SearchCardButtons>
+        <SearchCardButtons onClick={() => handleModal(recipe)}>
+          Quick View
+        </SearchCardButtons>
         <Link href={`/recipe/${recipe.id}`} passHref>
           <SearchCardButtons $primary={true}>
             See Recipe &#8594;
