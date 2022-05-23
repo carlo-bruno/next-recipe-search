@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import tw from "tailwind-styled-components";
+import HamburgerMenu from "./HamburgerMenu";
 import Nav from "./Nav";
 
 const Header = () => {
@@ -25,22 +26,7 @@ const Header = () => {
           <Title>Recipe Search</Title>
         </Logo>
       </Link>
-      <HamburgerMenu onClick={toggleMenu}>
-        <svg
-          className="w-7 h-7"
-          fill="none"
-          stroke="black"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </HamburgerMenu>
+      <HamburgerMenu toggleMenu={toggleMenu} isOpen={isOpen} />
       <Nav isOpen={isOpen} />
     </HeaderStyles>
   );
@@ -81,15 +67,4 @@ const Title = tw.h1`
   hover:underline
 
   md:text-2xl
-`;
-
-const HamburgerMenu = tw.button`
-  inline-flex
-  p-3
-  rounded-lg
-  ml-auto
-  outline-none
-  hover:bg-orange-300
-
-  lg:hidden
 `;
