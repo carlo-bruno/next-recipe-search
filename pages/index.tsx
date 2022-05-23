@@ -38,9 +38,11 @@ const Home: NextPage = () => {
       <hr />
 
       {/* Display Accordion for each Category */}
-      {categoryData.map((category: Category) => (
-        <Accordion key={category.id} category={category} />
-      ))}
+      <div className="md:max-w-5xl md:mx-auto">
+        {categoryData.map((category: Category) => (
+          <Accordion key={category.id} category={category} />
+        ))}
+      </div>
     </>
   );
 };
@@ -55,8 +57,10 @@ const IntroSection = tw.div`
   flex-row
   overflow-hidden
   
-  md:my-4
+  md:my-0
   md:h-max
+  md:max-w-4xl
+  md:mx-auto
 `;
 
 const ContentDiv = tw.div`
