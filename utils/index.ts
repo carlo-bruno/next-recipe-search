@@ -1,6 +1,7 @@
 import type { RecipeTransformedData } from "../types";
 import { countryCodeMap } from './coutryCode';
 
+// Transformer Util
 export function transformRawRecipe(recipeRaw: any): RecipeTransformedData {
   const ingredients = _getIngredients(recipeRaw);
   const instructions = _getInstructions(recipeRaw.strInstructions);
@@ -34,3 +35,40 @@ function _getInstructions(instrunctionRaw: any) {
   if (!instrunctionRaw) return [];
   return instrunctionRaw.replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|");
 }
+
+// Sorter Util
+export const sorter = (
+  data: RecipeTransformedData[],
+  sortBy: string
+): RecipeTransformedData[] => {
+  if (!data) return [];
+
+  if (sortBy === "alpha") {
+    return [...data].sort(_sorterAlpha);
+  } else if (sortBy === "origin") {
+    return [...data].sort(_sorterOrigin);
+  } else if (sortBy === "category") {
+    return [...data].sort(_sorterCategory);
+  } else {
+    return data;
+  }
+};
+
+const _sorterAlpha = (
+  a: RecipeTransformedData,
+  b: RecipeTransformedData
+) => {
+  return a.title > b.title ? 1 : -1;
+};
+const _sorterOrigin = (
+  a: RecipeTransformedData,
+  b: RecipeTransformedData
+) => {
+  return a.area > b.area ? 1 : -1;
+};
+const _sorterCategory = (
+  a: RecipeTransformedData,
+  b: RecipeTransformedData
+) => {
+  return a.category > b.category ? 1 : -1;
+};
