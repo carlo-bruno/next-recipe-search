@@ -1,41 +1,35 @@
 import Head from "next/head";
 import type { NextPage } from "next/types";
-import type { FormEvent, SyntheticEvent } from "react";
-import { useEffect, useState } from "react";
+import { FormEvent, SyntheticEvent, useMemo } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import tw from "tailwind-styled-components";
 import LoadingSpinner from "../components/LoadingSpinner";
 import SearchResultCard from "../components/SearchResultCard";
 import { ModalProvider } from "../context/modalContext";
 import useSearch from "../hooks/useSearch";
-import type { RecipeTransformedData } from "../types";
+import type { SortByOptions } from "../types";
 import { sorter } from "../utils";
 
 const SearchPage: NextPage = () => {
   const [queryString, setQueryString] = useState("");
   const [input, setInput] = useState("");
-  const [sortBy, setSortBy] = useState(""); // default | alpha | origin | category
-  const [list, setList] = useState<RecipeTransformedData[]>([]);
+  const [sortBy, setSortBy] = useState<SortByOptions>("default");
 
-  const { data, isLoading, error } = useQuery(
-    ["search", queryString],
-    useSearch,
-    {
-      staleTime: 1000 * 60 * 60,
-    }
-  );
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useQuery(["search", queryString], useSearch, {
+    staleTime: 1000 * 60 * 60,
+  });
 
-  useEffect(() => {
-    let sortedList = data || [];
-    if (sortBy !== "default") {
-      sortedList = sorter(sortedList, sortBy);
-    }
-    setList(sortedList);
-  }, [data, sortBy]);
+  const sortedList = useMemo(() => sorter(data, sortBy), [data, sortBy]);
 
   const handleSubmit = (evt: SyntheticEvent) => {
     evt.preventDefault();
     console.log("🚀  handleSubmit");
+    setSortBy("default");
     setQueryString(input.trim());
   };
 
@@ -43,7 +37,7 @@ const SearchPage: NextPage = () => {
     setInput(e.currentTarget.value);
   };
 
-  const handleSortSelect = (sortByString: string) => {
+  const handleSortSelect = (sortByString: SortByOptions) => {
     setSortBy(sortByString);
   };
 
@@ -82,14 +76,24 @@ const SearchPage: NextPage = () => {
             What recipe would you like to try today?
           </p>
         )}
-        {/* Sort header */}
-        <p className="ml-auto mr-4  text-sm font-bold">Sort:</p>
-        <ul className="w-1/3 md:w-[20%] lg:w-1/3 text-xs flex flex-row justify-between flex-wrap">
-          <li onClick={() => handleSortSelect("default")}>Default</li>
-          <li onClick={() => handleSortSelect("alpha")}>Alphabetically</li>
-          <li onClick={() => handleSortSelect("origin")}>By Origin</li>
-          <li onClick={() => handleSortSelect("category")}>By Category</li>
-        </ul>
+
+        <label htmlFor="sortSelect" className="ml-auto mr-4 text-sm font-bold">
+          Sort:
+        </label>
+        <select
+          name=""
+          id=""
+          value={sortBy}
+          onChange={(e) => handleSortSelect(e.target.value as SortByOptions)}
+        >
+          <option value="default">Default</option>
+          <option value="alpha_ascend">Alphabetical A-Z</option>
+          <option value="alpha_descend">Alphabetical Z-A</option>
+          <option value="origin_ascend">By Origin A-Z</option>
+          <option value="origin_descend">By Origin Z-A</option>
+          <option value="category_ascend">By Category A-Z</option>
+          <option value="category_descend">By Category Z-A</option>
+        </select>
       </div>
 
       <SearchResultGroup>
@@ -98,7 +102,7 @@ const SearchPage: NextPage = () => {
         ) : isLoading ? (
           <LoadingSpinner />
         ) : (
-          list.map((recipe) => (
+          sortedList.map((recipe) => (
             <SearchResultCard key={recipe.id} recipe={recipe} />
           ))
         )}

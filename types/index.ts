@@ -18,3 +18,12 @@ export interface RecipeTransformedData {
   source: string;
   youtube: string;
 }
+
+export type SortByOptions =
+  | "default"
+  | "alpha_ascend"
+  | "alpha_descend"
+  | "origin_ascend"
+  | "origin_descend"
+  | "category_ascend"
+  | "category_descend";

@@ -15,8 +15,9 @@ const useSearch = async (
       transformRawRecipe(item)
     );
     return transformedData;
+  } else {
+    return [];
   }
-  return [];
 };
 
 export default useSearch;

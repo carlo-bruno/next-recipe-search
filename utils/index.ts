@@ -1,4 +1,4 @@
-import type { RecipeTransformedData } from "../types";
+import type { RecipeTransformedData, SortByOptions } from "../types";
 import { countryCodeMap } from './coutryCode';
 
 // Transformer Util
@@ -39,36 +39,63 @@ function _getInstructions(instrunctionRaw: any) {
 // Sorter Util
 export const sorter = (
   data: RecipeTransformedData[],
-  sortBy: string
+  sortBy: SortByOptions
 ): RecipeTransformedData[] => {
   if (!data) return [];
 
-  if (sortBy === "alpha") {
-    return [...data].sort(_sorterAlpha);
-  } else if (sortBy === "origin") {
-    return [...data].sort(_sorterOrigin);
-  } else if (sortBy === "category") {
-    return [...data].sort(_sorterCategory);
-  } else {
-    return data;
+  switch (sortBy) {
+    case "alpha_ascend":
+      return [...data].sort(_sorterAlphaAscending);
+    case "alpha_descend":
+      return [...data].sort(_sorterAlphaDescending);
+    case "origin_ascend":
+      return [...data].sort(_sorterOriginAscending);
+    case "origin_descend":
+      return [...data].sort(_sorterOriginDescending);
+    case "category_ascend":
+      return [...data].sort(_sorterCategoryAscending);
+    case "category_descend":
+      return [...data].sort(_sorterCategoryDescending);
+    default:
+      return data;
   }
 };
 
-const _sorterAlpha = (
+const _sorterAlphaAscending = (
   a: RecipeTransformedData,
   b: RecipeTransformedData
 ) => {
   return a.title > b.title ? 1 : -1;
 };
-const _sorterOrigin = (
+const _sorterAlphaDescending = (
+  a: RecipeTransformedData,
+  b: RecipeTransformedData
+) => {
+  return a.title < b.title ? 1 : -1;
+};
+
+const _sorterOriginAscending = (
   a: RecipeTransformedData,
   b: RecipeTransformedData
 ) => {
   return a.area > b.area ? 1 : -1;
 };
-const _sorterCategory = (
+const _sorterOriginDescending = (
+  a: RecipeTransformedData,
+  b: RecipeTransformedData
+) => {
+  return a.area < b.area ? 1 : -1;
+};
+
+const _sorterCategoryAscending = (
   a: RecipeTransformedData,
   b: RecipeTransformedData
 ) => {
   return a.category > b.category ? 1 : -1;
+};
+const _sorterCategoryDescending = (
+  a: RecipeTransformedData,
+  b: RecipeTransformedData
+) => {
+  return a.category < b.category ? 1 : -1;
 };
